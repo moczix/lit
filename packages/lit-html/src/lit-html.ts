@@ -47,7 +47,7 @@ const wrap =
     ? window.ShadyDOM!.wrap
     : (node: Node) => node;
 
-const trustedTypes = (globalThis as unknown as Partial<Window>).trustedTypes;
+const trustedTypesLE = (globalThis as unknown as Partial<Window>).trustedTypes;
 
 /**
  * Our TrustedTypePolicy for HTML which is declared using the html template
@@ -57,8 +57,8 @@ const trustedTypes = (globalThis as unknown as Partial<Window>).trustedTypes;
  * before any untrusted expressions have been mixed in. Therefor it is
  * considered safe by construction.
  */
-const policy = trustedTypes
-  ? trustedTypes.createPolicy('lit-html', {
+const policy = trustedTypesLE
+  ? trustedTypesLE.createPolicy('lit-html', {
       createHTML: (s) => s,
     })
   : undefined;
@@ -780,8 +780,8 @@ class Template {
           const strings = (node as Element).textContent!.split(marker);
           const lastIndex = strings.length - 1;
           if (lastIndex > 0) {
-            (node as Element).textContent = trustedTypes
-              ? (trustedTypes.emptyScript as unknown as '')
+            (node as Element).textContent = trustedTypesLE
+              ? (trustedTypesLE.emptyScript as unknown as '')
               : '';
             // Generate a new text node for each literal section
             // These nodes are also used as the markers for node parts
@@ -1583,8 +1583,8 @@ class PropertyPart extends AttributePart {
 // Currently, any attribute starting with "on" is considered to be a
 // TrustedScript source. Such boolean attributes must be set to the equivalent
 // trusted emptyScript value.
-const emptyStringForBooleanAttribute = trustedTypes
-  ? (trustedTypes.emptyScript as unknown as '')
+const emptyStringForBooleanAttribute = trustedTypesLE
+  ? (trustedTypesLE.emptyScript as unknown as '')
   : '';
 
 export type {BooleanAttributePart};

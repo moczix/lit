@@ -38,15 +38,15 @@ let requestUpdateThenable: (name: string) => {
 
 let issueWarning: (code: string, warning: string) => void;
 
-const trustedTypes = (window as unknown as {trustedTypes?: {emptyScript: ''}})
+const trustedTypesRE = (window as unknown as {trustedTypes?: {emptyScript: ''}})
   .trustedTypes;
 
 // Temporary workaround for https://crbug.com/993268
 // Currently, any attribute starting with "on" is considered to be a
 // TrustedScript source. Such boolean attributes must be set to the equivalent
 // trusted emptyScript value.
-const emptyStringForBooleanAttribute = trustedTypes
-  ? (trustedTypes.emptyScript as unknown as '')
+const emptyStringForBooleanAttribute = trustedTypesRE
+  ? (trustedTypesRE.emptyScript as unknown as '')
   : '';
 
 const polyfillSupport = DEV_MODE

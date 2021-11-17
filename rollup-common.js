@@ -5,7 +5,6 @@
  */
 
 import summary from 'rollup-plugin-summary';
-import {terser} from 'rollup-plugin-terser';
 import copy from 'rollup-plugin-copy';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import sourcemaps from 'rollup-plugin-sourcemaps';
@@ -334,7 +333,6 @@ export function litProdConfig({
         virtual({
           [nameCacheSeederInfile]: nameCacheSeederContents,
         }),
-        terser(nameCacheSeederTerserOptions),
         skipBundleOutput,
       ],
     },
@@ -381,7 +379,6 @@ export function litProdConfig({
         // This plugin automatically composes the existing TypeScript -> raw JS
         // sourcemap with the raw JS -> minified JS one that we're generating here.
         sourcemaps(),
-        terser(terserOptions),
         summary(),
         ...(CHECKSIZE
           ? [skipBundleOutput]
@@ -452,7 +449,6 @@ const litMonoBundleConfig = ({
     // This plugin automatically composes the existing TypeScript -> raw JS
     // sourcemap with the raw JS -> minified JS one that we're generating here.
     sourcemaps(),
-    terser(terserOptions),
     summary(),
   ],
 });
